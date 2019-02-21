@@ -1,13 +1,13 @@
 {
-  "name": "webgl-mock",
-  "version": "0.1.7",
-  "description": "A simple implementation-less interface for testing code outside of WebGL",
-  "author": "Kevin Birk <birk.kevin@gmail.com>",
+  "name": "webgl-mock-threejs",
+  "version": "0.0.1",
+  "description": "A simple implementation-less interface for testing code outside of WebGL/works with three.js",
+  "author": "Namamono1129 <namamono1129v@gmail.com>",
   "main": "src/exports.js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kbirk/webgl-mock.git"
+    "url": "https://github.com/Namamono1129/webgl-mock-jsdom.git"
   },
   "files": [
     "src"
@@ -16,7 +16,8 @@
     "webgl",
     "test",
     "mock",
-    "stub"
+    "stub",
+    "three.js"
   ],
   "dependencies": {},
   "devDependencies": {}

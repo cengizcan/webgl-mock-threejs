@@ -1,51 +1,67 @@
-# webgl-mock.js
+# webgl-mock-threejs
 
-[![npm version](https://badge.fury.io/js/webgl-mock.svg)](http://badge.fury.io/js/webgl-mock) [![Dependency Status](https://david-dm.org/kbirk/webgl-mock.svg)](https://david-dm.org/kbirk/webgl-mock)
+[![Dependency Status](https://david-dm.org/kbirk/webgl-mock.svg)](https://david-dm.org/kbirk/webgl-mock)
 
-A simple implementation-less interface for testing code _outside_ of WebGL.
+A simple implementation-less interface for testing code _outside_ of WebGL **& three.js**, forked from [webgl-mock](https://github.com/kbirk/webgl-mock)
+
+## Motivation
+
+Since ```THREE.WebGLRenderer``` asks ```WebGLContext ``` much detail of graphic capability of device, original ```webgl-mock``` could not be used to test apps with three.js, causing NPE stuffs. This package simply has additional mock-answers for ```THREE.WebGLRenderer```, allowing it to run in node.
+
+It also includes mock for ```navigator``` object since ```THREE.WebGLRenderer``` does not run without it.
 
 ## Installation
 
 Requires [node](http://nodejs.org/).
 
 ```bash
-npm install webgl-mock
+npm i -D webgl-mock-threejs
 ```
 
 ## Usage
 
-Write source code using webgl.
+Instantiate ```HTMLCanvasElement``` and pass it to your app which uses ```THREE.WebGLRenderer```:
 
 ```javascript
-function VertexBuffer( gl, options ) {
-    options = options || {};
-    this.gl = gl;
-    this.type = ( options.type !== undefined ) ? options.type : gl.FLOAT;
-    this.mode = ( options.mode !== undefined ) ? options.mode : gl.TRIANGLES;
-    this.buffer = gl.createBuffer();
-    gl.bindBuffer( gl.ARRAY_BUFFER, this.buffer );
-    gl.bufferData( gl.ARRAY_BUFFER, options.data || options.size, gl.STATIC_DRAW );
-    gl.bindBuffer( gl.ARRAY_BUFFER, null );
+require('webgl-mock-threejs');
+
+const canvas = new HTMLCanvasElement( 640, 480 );
+
+describe("App test", () => {
+  it("Can initialize successfully", async () => {
+    let app = new YourApp(canvas);
+    await app.init();
+  })
+})
+```
+
+Your app would be like:
+
+```javascript
+class YourApp {
+
+  constructor( canvas ) {
+
+    this.renderer = null;
+    this.canvas = canvas;
+
+  }
+
+  async init() {
+
+    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+
+    /* your code continues.. */
+
+  }
+
 }
 ```
 
-Test source code outside of webgl.
+## Warning
 
-```javascript
-require('webgl-mock');
-var canvas = new HTMLCanvasElement( 500, 500 );
-var gl = canvas.getContext( 'webgl' );
+Importing this module results to inject ```global.nagivator``` mock to global namespace of Node, if no another exists.
+If you get some problems around ```navigator```, this module may have caused it.
 
-describe('VertexBuffer', function() {
-    describe('#constructor()', function() {
-        it('should default type to gl.FLOAT', function() {
-            var vb = new VertexBuffer( gl );
-            assert( vb.type === gl.FLOAT );
-        });
-        it('should default mode to gl.TRIANGLES', function() {
-            var vb = new VertexBuffer( gl );
-            assert( vb.type === gl.TRIANGLES );
-        });
-    });
-});
-```
+## canvas arg for app constructor/init function? I don't want it!
+I'm planning [jsdom](https://github.com/jsdom/jsdom) integration which enables to add  ```HTMLCanvasElement``` into DOM elements.
