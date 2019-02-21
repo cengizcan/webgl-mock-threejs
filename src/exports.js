@@ -24,6 +24,11 @@
     global.WebGLTexture = function() {};
     global.WebGLUniformLocation = function() {};
 
+    // Mocks navigator if no other mock is provided
+    if (global.navigator == null) {
+      global.navigator = {}
+    }
+
     // WebGL 2.0
     //global.WebGL2RenderingContext = function() {};
     //global.WebGLSync = function() {};
