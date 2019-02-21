@@ -21,6 +21,16 @@
         return null;
     };
 
+    // add nothing: this function is crucial in order to fake three.js
+    HTMLCanvasElement.prototype.addEventListener = function() {}
+
+    HTMLCanvasElement.prototype.getBoundingClientRect = function() {
+      return {
+        width: this.width,
+        height: this.height
+      }
+    }
+
     module.exports = HTMLCanvasElement;
 
 }());
