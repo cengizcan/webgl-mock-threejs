@@ -483,6 +483,23 @@
         };
     });
 
+    // mock(override) functions which three.js requests in initialization
+    WebGLRenderingContext.prototype.getShaderPrecisionFormat = function() {
+      return {
+        rangeMin: 127,
+        rangeMax: 127,
+        precision: 23
+      }
+    }
+
+    const GL_VERSION = 7938;
+    WebGLRenderingContext.prototype.getParameter = function( paramId ) {
+      switch ( paramId ) {
+        case GL_VERSION:
+          return "7938";
+      }
+    }
+
     // mock enums
     Object.keys( enums ).forEach( function( key ) {
         WebGLRenderingContext.prototype[ key ] = enums[ key ];
