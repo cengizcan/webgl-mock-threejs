@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Namamono1129/webgl-mock-jsdom.git"
+    "url": "https://github.com/cengizcan/webgl-mock-threejs.git"
   },
   "files": [
     "src"
