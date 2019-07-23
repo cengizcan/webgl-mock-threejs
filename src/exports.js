@@ -29,6 +29,14 @@
       global.navigator = {}
     }
 
+    // Mock document.document.createElementNS function
+    var origCreateElementNS = global.document.createElementNS;
+    global.document.createElementNS = function(namespaceURI, qualifiedName) {
+      if(qualifiedName === 'canvas')
+        return new global.HTMLCanvasElement();
+      else return origCreateElementNS(namespaceURI, qualifiedName);
+    };
+    
     // WebGL 2.0
     //global.WebGL2RenderingContext = function() {};
     //global.WebGLSync = function() {};
