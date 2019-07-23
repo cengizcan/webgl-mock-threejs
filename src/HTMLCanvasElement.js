@@ -8,6 +8,7 @@
     function HTMLCanvasElement( width, height ) {
         this.width = width !== undefined ? width : 100;
         this.height = height !== undefined ? height : 100;
+        this.style = { width: this.width, height: this.height };
     }
 
     HTMLCanvasElement.prototype.getContext = function( arg ) {
