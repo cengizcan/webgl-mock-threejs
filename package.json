@@ -1,6 +1,6 @@
 {
   "name": "webgl-mock-threejs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple implementation-less interface for testing code outside of WebGL/works with three.js",
   "author": "Namamono1129 <namamono1129v@gmail.com>",
   "main": "src/exports.js",
