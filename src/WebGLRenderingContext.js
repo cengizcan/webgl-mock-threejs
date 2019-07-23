@@ -1,7 +1,7 @@
 (function () {
 
     'use strict';
-
+    var logFunctions = ['getProgramInfoLog', 'getShaderInfoLog'];
     var functions = [
         'activeTexture',
         'attachShader',
@@ -68,10 +68,8 @@
         'getFramebufferAttachmentParameter',
         'getParameter',
         'getProgramParameter',
-        'getProgramInfoLog',
         'getRenderbufferParameter',
         'getShaderParameter',
-        'getShaderInfoLog',
         'getShaderPrecisionFormat',
         'getShaderSource',
         'getSupportedExtensions',
@@ -475,6 +473,13 @@
         this.drawingBufferWidth = canvas.width;
         this.drawingBufferHeight = canvas.height;
     }
+
+    // mock log functions
+    logFunctions.forEach( function( func ) {
+        WebGLRenderingContext.prototype[ func ] = function() {
+            return '';
+        };
+    });
 
     // mock functions
     functions.forEach( function( func ) {
